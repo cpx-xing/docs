@@ -33,6 +33,20 @@ export default defineUserConfig({
           },
         ],
       },
+      {
+        text: "java",
+        link: "/java/",
+        children: [
+          {
+            text: "spring",
+            link: "/java/spring/",
+          },
+          {
+            text: "mybatis",
+            link: "/java/mybatis/",
+          },
+        ],
+      },
     ],
   }),
   plugins: [
