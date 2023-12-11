@@ -2,13 +2,16 @@ import { defineUserConfig, defaultTheme } from "vuepress";
 import { searchPlugin } from "@vuepress/plugin-search";
 import { backToTopPlugin } from "@vuepress/plugin-back-to-top";
 export default defineUserConfig({
-  lang: "zh-CN",
+  //   作者
+  author: "Xing",
   base: "/",
   title: "Xing-Blog！",
   description: "这是我的第一个 VuePress 站点",
   head: [["link", { rel: "icon", href: "/images/logo.png" }]],
   theme: defaultTheme({
+    lang: "zh-CN",
     // 默认主题配置
+    contributors: false,
     search: true,
     navbar: [
       {
@@ -18,20 +21,6 @@ export default defineUserConfig({
       {
         text: "python",
         link: "/python/",
-        children: [
-          {
-            text: "python基础",
-            link: "/python/python_base/",
-          },
-          {
-            text: "python进阶",
-            link: "/python/python_advance/",
-          },
-          {
-            text: "python面试",
-            link: "/python/python_interview/",
-          },
-        ],
       },
       {
         text: "java",
