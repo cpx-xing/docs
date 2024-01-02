@@ -293,6 +293,261 @@ loop.run_until_complete(print_numbers())
 loop.close()
 ```
 
+
+
+## 数据分析
+
+### Numpy
+
+> 是一个由多维数组对象和用于处理数组的例程集合组成的库
+
+- NumPy 通常与 SciPy（Scientific Python）和 Matplotlib（绘图库）一起使用。 这种组合广泛用于替代 MatLab，是一个流行的技术计算平台。 但是，Python 作为 MatLab 的替代方案，现在被视为一种更加现代和完整的编程语言。
+
+#### Ndarray
+
+- NumPy 中定义的最重要的对象是称为 ndarray 的 N 维数组类型。 它描述相同类型的元素集合。 可以使用基于零的索引访问集合中的项目
+
+- ndarray中的每个元素在内存中使用相同大小的块。 ndarray中的每个元素是数据类型对象的对象（称为 dtype）。
+
+  ```python
+  # 创建ndarray
+  numpy.array(object, dtype = None, copy = True, order = None, subok = False, ndmin = 0)
+  # 参数及描述
+  # object 任何暴露数组接口方法的对象都会返回一个数组或任何（嵌套）序列。
+  # dtype 数组的所需数据类型，可选。
+  # copy 可选，默认为true，对象是否被复制。
+  # order C（按行）、F（按列）或A（任意，默认）。
+  # subok 默认情况下，返回的数组被强制为基类数组。 如果为true，则返回子类。
+  # ndmin 指定返回数组的最小维数。
+  ```
+
+#### Numpy中的数据类型
+
+| 序号 |                        数据类型及描述                        |
+| :--- | :----------------------------------------------------------: |
+| 1.   |           `bool_` 存储为一个字节的布尔值（真或假）           |
+| 2.   |  `int_` 默认整数，相当于 C 的`long`，通常为`int32`或`int64`  |
+| 3.   |       `intc` 相当于 C 的`int`，通常为`int32`或`int64`        |
+| 4.   | `intp` 用于索引的整数，相当于 C 的`size_t`，通常为`int32`或`int64` |
+| 5.   |                  `int8` 字节（-128 ~ 127）                   |
+| 6.   |             `int16` 16 位整数（-32768 ~ 32767）              |
+| 7.   |        `int32` 32 位整数（-2147483648 ~ 2147483647）         |
+| 8.   | `int64` 64 位整数（-9223372036854775808 ~ 9223372036854775807） |
+| 9.   |              `uint8` 8 位无符号整数（0 ~ 255）               |
+| 10.  |            `uint16` 16 位无符号整数（0 ~ 65535）             |
+| 11.  |          `uint32` 32 位无符号整数（0 ~ 4294967295）          |
+| 12.  |     `uint64` 64 位无符号整数（0 ~ 18446744073709551615）     |
+| 13.  |                   `float_` `float64`的简写                   |
+| 14.  |      `float16` 半精度浮点：符号位，5 位指数，10 位尾数       |
+| 15.  |      `float32` 单精度浮点：符号位，8 位指数，23 位尾数       |
+| 16.  |      `float64` 双精度浮点：符号位，11 位指数，52 位尾数      |
+| 17.  |                `complex_` `complex128`的简写                 |
+| 18.  |     `complex64` 复数，由两个 32 位浮点表示（实部和虚部）     |
+| 19.  |    `complex128` 复数，由两个 64 位浮点表示（实部和虚部）     |
+
+#### 数组属性 ndarray.shape
+
+```python
+import numpy as np
+
+a = np.array([[1,2,3],[3,4,5]])
+
+print(a.shape) # (2,3)
+
+# 调整数组的结构
+a.shape = (1, 2, 3)
+print(a) # array([[[1, 2, 3],[3, 4, 5]]])
+a.shape = (3,2)
+print(a) #[[1,2],[3,3],[4,5]]
+# 调整数组结构的另一种方式  reshape
+b = a.reshape(2,3)
+print(b) #[[1,2,3],[3,4,5]]
+```
+
+#### ndarray.itemsize
+
+```python
+ # 数组的 dtype 为 int8（一个字节）  
+import numpy as np 
+x = np.array([1,2,3,4,5], dtype = np.int8)  
+print x.itemsize # 1
+
+ 
+# 数组的 dtype 现在为 float32（四个字节）  
+x = np.array([1,2,3,4,5], dtype = np.float32)  
+print x.itemsize # 4
+```
+
+#### 数组创建例程
+
+##### Numpy.empty 
+
+- 数组元素为随机值
+
+```python
+# 它创建指定形状和dtype的未初始化数组。 它使用以下构造函数：
+numpy.empty(shape, dtype = float, order = 'C')
+# Shape 空数组的形状，整数或整数元组
+# Dtype 所需的输出数组类型，可选
+# Order 'C'为按行的 C 风格数组，'F'为按列的 Fortran 风格数组
+```
+
+##### Numpy.zeros
+
+- 返回特定大小，以 0 填充的新数组。
+
+```python
+numpy.zeros(shape, dtype = float, order = 'C')
+ 
+# 含有 5 个 0 的数组，默认类型为 float  
+import numpy as np 
+x = np.zeros(5)  
+print x
+
+```
+
+##### Numpy.ones
+
+```python
+ # 含有 5 个 1 的数组，默认类型为 float  
+import numpy as np 
+x = np.ones(5)  print x
+```
+
+##### Numpy.asarray
+
+- 此函数类似于`numpy.array`，除了它有较少的参数。 这个例程对于将 Python 序列转换为`ndarray`非常有用。
+
+```py
+ # 将列表转换为 ndarray 
+import numpy as np 
+ 
+x =  [1,2,3] 
+a = np.asarray(x)  
+print a
+
+ 
+# 来自元组的 ndarray  
+x =  (1,2,3) 
+a = np.asarray(x)  
+print a
+```
+
+##### Numpy.frombuffer
+
+- 此函数将缓冲区解释为一维数组。 暴露缓冲区接口的任何对象都用作参数来返回ndarray。
+
+```python
+numpy.frombuffer(buffer, dtype = float, count = -1, offset = 0)
+# buffer 任何暴露缓冲区借口的对象
+# dtype 返回数组的数据类型，默认为float
+# count 需要读取的数据数量，默认为-1，读取所有数据
+# offset 需要读取的起始位置，默认为0
+ 
+import numpy as np 
+s =  'Hello World' 
+a = np.frombuffer(s, dtype =  'S1')  
+print a # ['H'  'e'  'l'  'l'  'o'  ' '  'W'  'o'  'r'  'l'  'd']
+```
+
+##### Numpy.fromiter
+
+- 此函数从任何可迭代对象构建一个`ndarray`对象，返回一个新的一维数组。
+
+  ```python
+  numpy.fromiter(iterable, dtype, count = -1)
+  # iterable 任何可迭代对象
+  # dtype 返回数组的数据类型
+  # count 需要读取的数据数量，默认为-1，读取所有数据
+   
+  # 从列表中获得迭代器  
+  import numpy as np 
+  list = range(5) 
+  it = iter(list)  
+  # 使用迭代器创建 ndarray 
+  x = np.fromiter(it, dtype =  float)  
+  print x
+  ```
+
+##### Numpy.arange
+
+- 这个函数返回`ndarray`对象，包含给定范围内的等间隔值。
+
+```python
+numpy.arange(start, stop, step, dtype)
+# start 范围的起始值，默认为0
+# stop 范围的终止值（不包含）
+# step 两个值的间隔，默认为1
+# dtype 返回ndarray的数据类型，如果没有提供，则会使用输入数据的类型。
+
+ 
+import numpy as np
+x = np.arange(5)  
+print x # [0  1  2  3  4]
+ 
+# 设置了起始值和终止值参数  
+import numpy as np
+x = np.arange(10,20,2)  
+print x # [10  12  14  16  18]
+```
+
+##### Numpy.linspace
+
+- 此函数类似于`arange()`函数。 在此函数中，指定了范围之间的均匀间隔数量，而不是步长。 此函数的用法如下。
+
+  ```python
+  numpy.linspace(start, stop, num, endpoint, retstep, dtype)
+  # start 序列的起始值
+  # stop 序列的终止值，如果endpoint为true，该值包含于序列中
+  # num 要生成的等间隔样例数量，默认为50
+  # endpoint 序列中是否包含stop值，默认为ture
+  # retstep 如果为true，返回样例，以及连续数字之间的步长
+  # dtype 输出ndarray的数据类型
+   
+  import numpy as np
+  x = np.linspace(10,20,5)  
+  print x # [10.   12.5   15.   17.5  20.]
+  ```
+
+##### Numpy.logsapce
+
+- 此函数返回一个`ndarray`对象，其中包含在对数刻度上均匀分布的数字。 刻度的开始和结束端点是某个底数的幂，通常为 10。
+
+```python
+numpy.logscale(start, stop, num, endpoint, base, dtype)
+# 	base 对数空间的底数，默认为10 
+import numpy as np
+# 默认底数是 10
+a = np.logspace(1.0,  2.0, num =  10)  
+print a
+
+ 
+# 将对数空间的底数设置为 2  
+import numpy as np
+a = np.logspace(1,10,num =  10,  base  =  2)  
+print a # [ 2.     4.     8.    16.    32.    64.   128.   256.    512.   1024.]
+
+```
+
+#### 索引与切片
+
+- ndarray对象的内容可以通过索引或切片来访问和修改，就像 Python 的内置容器对象一样。
+
+- 如前所述，ndarray对象中的元素遵循基于零的索引。 有三种可用的索引方法类型： **字段访问**，**基本切片**和**高级索引**。
+
+- 基本切片是 Python 中基本切片概念到 n 维的扩展。 通过将start，stop和step参数提供给内置的slice函数来构造一个 Python slice对象。 此slice对象被传递给数组来提取数组的一部分。
+
+```python
+import numpy as np
+a = np.arange(10)
+s = slice(2,7,2)  
+print a[s] # [2  4  6]
+# ndarray对象由arange()函数创建。 然后，分别用起始，终止和步长值2，7和2定义切片对象。 当这个切片对象传递给ndarray时，会对它的一部分进行切片，从索引2到7，步长为2。
+# 通过将由冒号分隔的切片参数（start:stop:step）直接提供给ndarray对象，也可以获得相同的结果。
+```
+
+
+
 ## Python使用中的问题记录
 
 ### 使用openpyxl操作大量数据写入
